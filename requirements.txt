@@ -1,0 +1,8 @@
+streamlit
+pickle
+mysql.connector
+requests
+pinecone
+PyMuPDF
+google-generativeai
+os
