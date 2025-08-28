@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 OMDb_API = os.getenv("OMDb_API")
+Api_key = os.getenv("TMDB_API_KEY")
 
 # @st.cache_resource
 # def load_pickle_file(path):
@@ -33,7 +34,7 @@ error_shown = False
 def fetch_poster(movie_id):
     global error_shown
     try:
-        url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key=2fdff14628e91a72e96c485e68560394&language=en-US"
+        url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={Api_key}&language=en-US"
         data = requests.get(url)
         data.raise_for_status()  # Raise HTTPError for bad responses (4xx and 5xx)
         data = data.json()
