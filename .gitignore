@@ -2,3 +2,8 @@ config.py
 .env
 venv
 models
+artifacts/cast_list.pkl
+artifacts/genres.pkl
+src/movie.py
+src/dependencies.py
+temp.py

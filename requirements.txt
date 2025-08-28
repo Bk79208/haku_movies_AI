@@ -6,3 +6,5 @@ pinecone
 PyMuPDF
 google-generativeai
 os
+python-dotenv
+groq
