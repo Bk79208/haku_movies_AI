@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from pinecone import Pinecone
 from src.create_vectors import embed_text, vector_index
 from groq import Groq
+from src.recommend import recommendFromGenres
 
 # Load environment variables
 load_dotenv()
@@ -14,7 +15,7 @@ GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 groq_client = Groq(api_key=GROQ_API_KEY)
 def chatbox():
     # App title
-    st.title("🎬 K - Your Movie Assistant")
+    st.title("🎬 AI chat Assistant")
 
     # System prompt
     system_prompt = {
@@ -33,6 +34,7 @@ def chatbox():
     # Display previous messages with styling
     for message in st.session_state.chat_history:
         if message["role"] == "user":
+            # st.markdown(message["content"])
             st.markdown(
                 f"""
                 <div style="
@@ -87,6 +89,7 @@ def chatbox():
 
         # Add user message to history
         st.session_state.chat_history.append({"role": "user", "content": user_input})
+
 
         # --- RAG retrieval ---
         vector = embed_text(user_input).get("embedding", [])

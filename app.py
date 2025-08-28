@@ -2,27 +2,17 @@ import streamlit as st
 # import sqlite3
 import mysql.connector
 # import requests
-import pickle
-
-from src.recommend import recommendFromGenres
 from src.main import main
 from src.Chat_box2 import chatbox
+from src.image_predistion import image_pre
+from src.rec_name import rec
+from src.search_movie import search_movie_detail
+# from src.movie import movie_detail
 
 # Load movie data from pickle
-movies = pickle.load(open('artifacts/movie_list.pkl','rb'))
-movies['genres'] = movies['genres'].apply(lambda x: x.replace(' ', ', '))
-movie_genres = pickle.load(open('artifacts/genres_list.pkl','rb'))
-
-# Clean the column names
-# movies.columns = movies.columns.str.strip().str.lower()
-
-# Print to debug
-# st.write("Columns:", movies.columns.tolist())
-
-# Should now work
-# genres = movie_genres["genre"].unique()
-
-
+# movies = pickle.load(open('artifacts/movie_list.pkl','rb'))
+# movies['genres'] = movies['genres'].apply(lambda x: x.replace(' ', ', '))
+# movie_genres = pickle.load(open('artifacts/genres_list.pkl','rb'))
 
 # Connect to MySQL
 # def get_connection():
@@ -42,10 +32,6 @@ movie_genres = pickle.load(open('artifacts/genres_list.pkl','rb'))
 #     return result is not None
 
 
-# # def get_movies_by_genre(genre):
-# #     return movies[movies["genre"] == genre].to_dict(orient="records")
-# # def get_movies_by_genre(genre):
-# #     return movies[movies["genre"].apply(lambda g: genre in g)].to_dict(orient="records")
 
 # # --- LOGIN PAGE ---
 # if "logged_in" not in st.session_state:
@@ -68,10 +54,33 @@ movie_genres = pickle.load(open('artifacts/genres_list.pkl','rb'))
 
     # chatbox()
 
-tab1, tab2 = st.tabs(["🎬 Movies Collection", "💬 Chat Assistant"])
+st.sidebar.subheader("Input Settings")
 
-with tab1:
+input_type = st.sidebar.radio("features", ("Main", "Search", "Image", "Chat assistent", "Recommendation"))
+if input_type == "Main":
+    
+    # Movies Collection Section
+    # st.header("🎬 Movies Collection")
     main()
 
-with tab2:
+    # st.markdown("---")  # horizontal line separator
+
+    # # Chat Assistant Section
+    # st.header("💬 K - Your Movie Assistant")
+    # chatbox()
+if input_type == "Search":
+    
+    # title = st.text_input('Type the title and press Enter')
+    # if st.button('search'):
+    #         search_movie_detail(title)
+    search_movie_detail()
+            
+
+if input_type == "Image":
+    image_pre()
+
+if input_type == "Chat assistent":
     chatbox()
+
+if input_type == "Recommendation":
+    rec()
